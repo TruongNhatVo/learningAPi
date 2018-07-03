@@ -19,7 +19,7 @@ const menu = [
 	}
 ]
 
-const MenuLink = ({path,exact,label}) => {
+const MenuLink = ({index, path,exact,label}) => {
 	return <Route 
 						path={path}
 						exact={exact}
@@ -50,6 +50,7 @@ class Menu extends Component {
 		if (item.length > 0) {
 			item = item.map((value,index) => {
 				return <MenuLink 
+									key={index}
 									path={value.path}
 									label={value.label}
 									exact={value.exact}
