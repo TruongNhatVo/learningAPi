@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import Product from './product';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class Products extends Component {
+
+    componentDidMount() {
+        this.props.fetchAllProducts();
+
+        var { products } = this.props;
+        console.log(products);
+        console.log('1231');
+    }
+    
+
     render() {
+
+
         return (
             <div className="Products">
 
@@ -32,4 +46,18 @@ class Products extends Component {
     }
 }
 
-export default Products;
+const mapStateToProps = state => {
+    return {
+        products : state.products
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        fetchAllProducts : () => {
+            dispatch(actions.fetchProductRequest())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

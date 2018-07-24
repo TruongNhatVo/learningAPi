@@ -5,9 +5,10 @@ var initialState = [];
 const products = (state = initialState, action) => {
     switch (action.types ) {
         case types.FETCH_PRODUCTS :
-            return state;
+            state = action.products;
+            return [...state];
         default :
-            return state;
+            return [...state];
     }
 }
 

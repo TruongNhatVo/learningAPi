@@ -37,7 +37,7 @@ class Menu extends Component {
     return (
       <div className="navbar">
       	<div className="container-fluid">
-      		<a className="navbar-brand" href="#">API CALL</a>
+      		<a className="navbar-brand">API CALL</a>
       		<ul className="nav navbar-nav">
       			{this.showMenu(menu)}
       		</ul>
