@@ -3,7 +3,7 @@ import * as types from './../contanst/types';
 var initialState = [];
 
 const products = (state = initialState, action) => {
-    switch (action.types ) {
+    switch ( action.type ) {
         case types.FETCH_PRODUCTS :
             state = action.products;
             return [...state];

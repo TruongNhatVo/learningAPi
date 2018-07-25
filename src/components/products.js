@@ -7,15 +7,13 @@ class Products extends Component {
 
     componentDidMount() {
         this.props.fetchAllProducts();
-
-        var { products } = this.props;
-        console.log(products);
-        console.log('1231');
     }
     
-
+    
     render() {
 
+        var products = this.props.products;
+        console.log(products);
 
         return (
             <div className="Products">
