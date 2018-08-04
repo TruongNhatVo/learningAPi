@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-class Product extends Component {
-    render() {
-        return (
-            <tr>
-                <td>12313</td>
-                <td>1313</td>
-                <td>313</td>
-                <td>312313</td>
-            </tr>
-        );
-    }
+const Product = (props) => {
+    return (
+        <tr className="contact">
+            <td>{props.id}</td>
+            <td>{props.name}</td>
+            <td>{props.price}</td>
+            <td>{props.status ? 'Còn hàng' : 'hết hàng'}</td>
+        </tr >
+    )
 }
 
 export default Product;

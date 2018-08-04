@@ -1,6 +1,6 @@
 import React from "react";
 import Home from './components/home';
-import Products from './components/products';
+import ProductsPage from './pages/productsPage';
 import About from './components/about';
 
 const routes = [
@@ -11,7 +11,7 @@ const routes = [
     },
     {
         path: "/products",
-        main: () => <Products />
+        main: () => <ProductsPage />
     },
     {
         path: "/about",

@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
-import Product from './product';
-import { connect } from 'react-redux';
-import * as actions from './../actions/index';
 
 class Products extends Component {
 
-    componentDidMount() {
-        this.props.fetchAllProducts();
-    }
-    
-    
     render() {
-
-        var products = this.props.products;
-        console.log(products);
 
         return (
             <div className="Products">
@@ -27,12 +16,12 @@ class Products extends Component {
                             <tr>
                                 <th>STT</th>
                                 <th>Products name</th>
-                                <th>status</th>
-                                <th>Action</th>
+                                <th>Price</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <Product />
+                            { this.props.children }
                         </tbody>
                     </table>
                     
@@ -44,18 +33,5 @@ class Products extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        products : state.products
-    }
-}
 
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        fetchAllProducts : () => {
-            dispatch(actions.fetchProductRequest())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default Products;
