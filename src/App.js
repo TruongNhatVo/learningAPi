@@ -23,9 +23,11 @@ class App extends Component {
       <Router>
         <div className="App">
           <Menu />
-          <Switch>
-            {this.switchLink(routes)}
-          </Switch>
+          <div className="container">
+            <Switch>
+              {this.switchLink(routes)}
+            </Switch>
+          </div>
         </div>
       </Router>
     );

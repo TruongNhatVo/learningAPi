@@ -4,20 +4,21 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './../actions/index';
 import Pagination from "react-js-pagination";
+import { Link } from 'react-router-dom';
 
 class ProductsPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          activePage: 1,
-          itemPerPage: 5
+            activePage: 1,
+            itemPerPage: 5
         };
-      }
+    }
 
     componentDidMount() {
         this.props.fetchAllProducts();
-        
+
     }
 
     handlePageChange = (pageNumber) => {
@@ -28,24 +29,27 @@ class ProductsPage extends Component {
     render() {
         var indexOfLastTodo = this.state.activePage * this.state.itemPerPage;
         var indexOfFirstTodo = indexOfLastTodo - this.state.itemPerPage;
-        var  products = this.props.products.slice(indexOfFirstTodo, indexOfLastTodo);
+        var products = this.props.products.slice(indexOfFirstTodo, indexOfLastTodo);
 
         return (
             <Fragment>
+                <Link to="/product/add" type="button" className="btn btn-info">Add product</Link>
                 <Products>
                     {this.showProducts(products)}
                 </Products>
-                <div className="container">
-                    <Pagination
-                        activePage={this.state.activePage}
-                        itemsCountPerPage={this.state.itemPerPage}
-                        totalItemsCount={this.props.products.length}
-                        pageRangeDisplayed={5}
-                        onChange={this.handlePageChange}
-                    />
-                </div>
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={this.state.itemPerPage}
+                    totalItemsCount={this.props.products.length}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                />
             </Fragment>
         );
+    }
+
+    onDeleteHandler = (id) => {
+        this.props.deleterProduct(id);
     }
 
     showProducts(products) {
@@ -56,6 +60,7 @@ class ProductsPage extends Component {
                     <Product
                         key={index}
                         {...product}
+                        deleteItem={this.onDeleteHandler}
                     />
                 );
             });
@@ -75,6 +80,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchAllProducts: () => {
             dispatch(actions.fetchProductRequest())
+        },
+        deleterProduct: (id) => {
+            dispatch(actions.deleteProductRequest(id))
         }
     }
 }
