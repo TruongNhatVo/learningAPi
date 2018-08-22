@@ -46,11 +46,9 @@ class ProductActionPage extends Component {
     }
 
     onSubmitFormHandler = (dataForm) => {
-        if(this.state.formValue.id) {
-            console.log('update product')
-        }
-        this.props.saveProduct(dataForm)
         let { history } = this.props
+        let productID = this.state.formValue.id
+        productID ? this.props.updateProduct(dataForm) : this.props.saveProduct(dataForm)
         history.goBack()
     } 
 
@@ -89,6 +87,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         fetchProductById: (productId) => {
             dispatch(actions.fetchProductByIdRequest(productId))
+        },
+        updateProduct: (newProductValue) => {
+            dispatch(actions.updateProductRequest(newProductValue))
         }
     }
 }

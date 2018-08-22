@@ -61,3 +61,18 @@ export const fetchProductByIdRequest = (id) => {
         })
     }
 }
+
+export const updateProductAct = (newProductValue) => {
+    return {
+        type: types.UPDATE_PRODUCT,
+        newProductValue
+    }
+}
+
+export const updateProductRequest = (newProductValue) => {
+    return dispatch => {
+        return apiCall(`products/${newProductValue.id}`, 'PUT', newProductValue).then(res => {
+            dispatch(updateProductAct(res.data))
+        })
+    }
+}
