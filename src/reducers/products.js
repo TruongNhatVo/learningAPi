@@ -10,8 +10,10 @@ const products = (state = initialState, action) => {
             return [...state];
         case types.DELETE_PRODUCT:
             let indexToRemove = findIndex(state, { 'id': action.id })
-            state.splice(indexToRemove,1)
-            return [...state];
+            state.splice(indexToRemove, 1)
+            return [...state]
+        case types.ADD_PRODUCT:
+            return [...state, action.product]
         default:
             return [...state];
     }

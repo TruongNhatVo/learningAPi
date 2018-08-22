@@ -1,13 +1,65 @@
-import React, { Component } from 'react';
+import React from 'react';
+// import ReactDOM from 'react-dom';
 
-class DynamicForm extends Component {
+
+
+export default class DynamicForm extends React.Component {
+
+    onSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    renderForm() {
+        let formUi = this.props.model.map((value) => {
+            return (
+
+                <div
+                    className="form-group"
+                    key={value.key}
+                >
+                    <label
+                        key={`key-$value.key`}
+                        htmlFor={value.key}>{value.label}</label>
+                    <input
+                        {...value.props} 
+                        type={value.type || 'text'} 
+                        key={`i-$value.key`}
+                        ref={(key) => {this[value.key] = key}}
+                        onChange={(e) => {this.onChangeHandler(e,value.key)}}
+                        className="form-control" />
+                </div>
+            )
+        })
+        return formUi
+    }
+
+    onChangeHandler(e,key) {
+        console.log(key)
+    }
+
     render() {
+        let title = this.props.title || "Dynamic Form";
+
         return (
-            <div>
-                
+            <div className="panel panel-info">
+
+                <div class="panel-heading">
+                    <h3 className="form-title">{title}</h3>
+                </div>
+
+                <div className="panel-body" >
+                    <form className="dynamic-form" onSubmit={(e) => { this.onSubmit(e) }}>
+                        {this.renderForm()}
+
+
+                        <div className="form-actions">
+                            <button type="submit">Add product</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        );
+
+
+        )
     }
 }
-
-export default DynamicForm;

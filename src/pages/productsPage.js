@@ -49,7 +49,7 @@ class ProductsPage extends Component {
     }
 
     onDeleteHandler = (id) => {
-        this.props.deleterProduct(id);
+        this.props.deleterProduct(id)
     }
 
     showProducts(products) {

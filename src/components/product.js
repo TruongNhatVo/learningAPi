@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class Product extends Component {
 
     onDelete = (id) => {
-        this.props.deleteItem(id);
+        this.props.deleteItem(id)
     }
 
     render() {
@@ -19,7 +20,10 @@ class Product extends Component {
                         onClick={() => this.onDelete(this.props.id)}
                         className="label label-danger"
                     >Delete</span>&nbsp;
-                <span className="label label-info">Edit</span>
+                    <Link 
+                        className="label label-info"
+                        to={`/product/${this.props.id}`}
+                    >Edit</Link>
                 </td>
             </tr >
         );

@@ -1,49 +1,75 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from './../actions/index';
+import React, { Component } from 'react'
+import Form from "react-jsonschema-form";
+import { connect } from 'react-redux'
+import * as actions from './../actions/index'
 
-const styleForm = ({
-    width: '500px',
-    margin: '0 auto',
-})
+const schema = {
+    type: "object",
+    properties: {
+        name: { type: "string", title: "Product Name" },
+        price: { 'type': "number", title: "Product price" },
+        status: { type: "boolean", title: "Product status", default: false }
+    }
+}
+
+const log = (type) => console.log.bind(console, type)
 
 class ProductActionPage extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            formValue : {}
+        };
+    }
+
+    componentDidMount() {
+        let {match} = this.props
+        if (match) {
+            this.props.fetchProductById(match.params.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        if (nextProps && nextProps.formDataReducer) {
+            this.setState({
+                formValue : nextProps.formDataReducer
+            })
+        }
+    }
+
+    onChangeValue = (data) => {
+        this.setState({
+            formValue : data.formData
+        })
+    }
+
+    onSubmitFormHandler = (dataForm) => {
+        if(this.state.formValue.id) {
+            console.log('update product')
+        }
+        this.props.saveProduct(dataForm)
+        let { history } = this.props
+        history.goBack()
+    } 
+
     render() {
-
         return (
-
-
-            <div className="panel panel-primary" style={styleForm}>
+            <div className="panel panel-primary">
                 <div className="panel-heading">
-                    <h1 className="panel-title">Products Action form</h1>
+                    <h3 className="panel-title">Add products form</h3>
                 </div>
                 <div className="panel-body">
-                    <form>
-
-
-                        <div className="form-group">
-                            <label for="">label</label>
-                            <input type="text" className="form-control" placeholder="Input field" />
-                        </div>
-
-                        <div className="form-group">
-                            <label for="">label 2</label>
-                            <input type="text" className="form-control" placeholder="Input field" />
-                        </div>
-
-                        <div className="form-group">
-                            <label for="">label 3</label>
-                            <input type="text" className="form-control" placeholder="Input field" />
-                        </div>
-
-
-
-                        <button className="btn btn-primary">Submit</button>
-                    </form>
-                  </div>
+                    <Form schema={schema}
+                        formData={this.state.formValue}
+                        onChange={(changeValue) => this.onChangeValue(changeValue)}
+                        onSubmit={() => this.onSubmitFormHandler(this.state.formValue)}
+                        onError={log("errors")}>
+                        <button className="btn btn-primary" type="submit">Add product</button>
+                    </Form>
+                </div>
             </div>
-
 
         );
     }
@@ -52,11 +78,18 @@ class ProductActionPage extends Component {
 
 const mapStateToProps = state => {
     return {
+        formDataReducer : state.productEdit
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
+        saveProduct: (product) => {
+            dispatch(actions.addProductRequest(product))
+        },
+        fetchProductById: (productId) => {
+            dispatch(actions.fetchProductByIdRequest(productId))
+        }
     }
 }
 
